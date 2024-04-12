@@ -40,7 +40,7 @@ export default class GetPetByIdUseCase implements IUseCase<GetPetByIdUseCaseInpu
             bio: pet.bio,
             photo: petPhoto,
             createdAt: pet.createdAt,
-            updatedAt: pet.updatedAt,
+            updatedAt: pet.updateAt,
         });
     }
 
