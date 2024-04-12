@@ -1,26 +1,27 @@
-import { IUseCase } from 'src/domain/iusecase.interface';
-import GetShelterDetailsUseCaseOutput from './dtos/get.shelter.details.usecase.output';
+import { IUseCase } from 'src/domain/interfaces/usecase/IUsecase.interface';
+import GetSheltherDetailsUseCaseOutput from './dtos/get.shelter.details.usecase.output';
+import { Inject, Injectable } from '@nestjs/common';
 import IShelterRepository from '../interfaces/shelter.repository.interface';
-import { Inject } from '@nestjs/common';
-import ShelterTokens from '../shelter.tokens';
+import ShelterTokens from '../shelter.token';
 
-export default class GetShelterDetailsUseCase
-  implements IUseCase<null, GetShelterDetailsUseCaseOutput> {
-
+@Injectable()
+export default class GetSheltherDetailsUseCase
+  implements IUseCase<null, GetSheltherDetailsUseCaseOutput>
+{
   constructor(
     @Inject(ShelterTokens.shelterRepository)
     private readonly shelterRepository: IShelterRepository,
   ) {}
 
-  async run(): Promise<GetShelterDetailsUseCaseOutput> {
+  async run(): Promise<GetSheltherDetailsUseCaseOutput> {
     const shelter = await this.shelterRepository.get();
-    return new GetShelterDetailsUseCaseOutput({
+    return new GetSheltherDetailsUseCaseOutput({
       shelterName: shelter.name,
       shelterEmail: shelter.email,
       shelterPhone: shelter.phone,
       shelterWhatsApp: shelter.whatsApp,
       createdAt: shelter.createdAt,
-      updatedAt: shelter.updatedAt,
+      updatedAt: shelter.updateAt,
     });
   }
 }

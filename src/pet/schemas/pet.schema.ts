@@ -32,7 +32,7 @@ export class Pet {
   createdAt: Date;
 
   @Prop({ required: true })
-  updatedAt: Date;
+  updateAt: Date;
 }
 
 export const PetSchema = SchemaFactory.createForClass(Pet);
