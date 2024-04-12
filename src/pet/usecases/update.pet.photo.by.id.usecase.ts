@@ -2,12 +2,12 @@ import { IUseCase } from "src/domain/iusecase.interface";
 import UpdatePetPhotoByIdUseCaseInput from "./dtos/update.pet.photo.by.id.usecase.input";
 import UpdatePetPhotoByIdUseCaseOutput from "./dtos/update.pet.photo.by.id.usecase.output";
 import { Inject, Injectable } from "@nestjs/common";
-import PetTokens from "../pet.tokens";
 import IPetRepository from "../interfaces/pet.repository.interface";
 import { Pet } from "../schemas/pet.schema";
 import PetNotFoundError from "src/domain/errors/pet.not.found.error";
 import AppTokens from "src/app.tokens";
 import IFileService from "src/interfaces/file.service.interface";
+import PetTokens from "../pet.token";
 
 @Injectable()
 export default class UpdatePetPhotoByIdUseCase implements IUseCase<UpdatePetPhotoByIdUseCaseInput, UpdatePetPhotoByIdUseCaseOutput> {

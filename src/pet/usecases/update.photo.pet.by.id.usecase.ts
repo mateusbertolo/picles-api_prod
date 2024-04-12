@@ -3,11 +3,12 @@ import UpdatePetPhotoByIdUseCaseInput from './dtos/update.pet.photo.by.id.usecas
 import { Inject, Injectable } from '@nestjs/common';
 import UpdatePetPhotoByIdUseCaseOutput from './dtos/update.pet.photo.by.id.usecase.output';
 import IPetRepository from '../pet.repository';
-import PetTokens from '../pet.tokens';
+
 import { Pet } from '../schemas/pet.schema';
 import PetNotFoundError from 'src/domain/errors/pet.not.found.error';
 import AppTokens from 'src/app.tokens';
 import IFileService from 'src/interfaces/file.service.interface';
+import PetTokens from '../pet.token';
 
 @Injectable()
 export default class UpdatePetPhotoByIdUseCase

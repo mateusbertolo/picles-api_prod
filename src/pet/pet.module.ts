@@ -6,7 +6,7 @@
 // import { MongooseModule } from '@nestjs/mongoose';
 import { Module } from '@nestjs/common';
 import { PetController } from './pet.controller';
-import PetTokens from './pet.tokens';
+
 import CreatePetUseCase from './usecases/create.pet.usecase';
 import PetRepository from './pet.repository';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -18,6 +18,7 @@ import FileService from 'src/file.service';
 import AppTokens from 'src/app.tokens';
 import UpdatePetPhotoByIdUseCase from './usecases/update.photo.pet.by.id.usecase';
 import GetPetUseCase from './usecases/dtos/get.pets.usecase';
+import PetTokens from './pet.token';
 
 @Module({
   controllers: [PetController],

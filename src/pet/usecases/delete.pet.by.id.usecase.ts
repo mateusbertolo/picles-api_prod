@@ -4,8 +4,8 @@ import DeletePetByIdUseCaseOutput from './dtos/delete.pet.by.id.usecase.output';
 import { Pet } from '../schemas/pet.schema';
 import { Inject, Injectable } from '@nestjs/common';
 import PetNotFoundError from 'src/domain/errors/pet.not.found.error';
-import PetTokens from '../pet.tokens';
 import IPetRepository from '../pet.repository';
+import PetTokens from '../pet.token';
 @Injectable()
 export default class DeletePetByIdUseCase
   implements IUseCase<DeletePetByIdUseCaseInput, DeletePetByIdUseCaseOutput>
