@@ -41,7 +41,7 @@ export default class FindPetByIdUseCase
       bio: pet.bio,
       photo: petPhoto,
       createdAt: pet.createdAt,
-      updatedAt: pet.updateAt,
+      updatedAt: pet.updatedAt,
     });
   }
 

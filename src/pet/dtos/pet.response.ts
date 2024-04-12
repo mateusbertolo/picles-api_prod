@@ -21,7 +21,7 @@ export default class PetResponse {
       bio: data.bio,
       photo: data.photo,
       createdAt: data.createdAt,
-      updateAt: data.updateAt,
+      updateAt: data.updatedAt,
     });
   }
 
