@@ -11,6 +11,7 @@ import IFileService from "src/interfaces/file.service.interface";
 
 @Injectable()
 export default class UpdatePetPhotoByIdUseCase implements IUseCase<UpdatePetPhotoByIdUseCaseInput, UpdatePetPhotoByIdUseCaseOutput> {
+    [x: string]: any;
     
     constructor(
         @Inject(PetTokens.petRepository)
@@ -34,6 +35,9 @@ export default class UpdatePetPhotoByIdUseCase implements IUseCase<UpdatePetPhot
         });
 
         const photo = await this.fileService.readFile(input.photoPath);
+
+        const petPhoto = !!pet.photo ?(await this.fileservice.readfile(pet.photo)).toString
+        ('base64'): null;
 
         return new UpdatePetPhotoByIdUseCaseOutput({
             id: pet._id,
