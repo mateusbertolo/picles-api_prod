@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 
-export type PetDocment = HydratedDocument<Pet>;
+export type PetDocument = HydratedDocument<Pet>;
+
 @Schema({
   versionKey: false,
 })
@@ -11,12 +12,16 @@ export class Pet {
 
   @Prop({ required: true })
   name: string;
+
   @Prop({ required: true })
   type: string;
+
   @Prop({ required: true })
   size: string;
+
   @Prop({ required: true })
   gender: string;
+
   @Prop({ required: true })
   bio: string;
 
@@ -25,6 +30,7 @@ export class Pet {
 
   @Prop({ required: true })
   createdAt: Date;
+
   @Prop({ required: true })
   updatedAt: Date;
 }

@@ -2,28 +2,25 @@ import {
   IsEmail,
   IsNotEmpty,
   IsNumberString,
-  IsOptional,
   IsString,
   Length,
 } from 'class-validator';
 
-export default class UpdateShelterControlerInput {
-  @IsOptional()
-  @IsNotEmpty()
+export default class UpdateShelterControllerInput {
   @IsString()
+  @IsNotEmpty()
   name: string;
-  @IsOptional()
   @IsNotEmpty()
   @IsString()
   @Length(10, 11)
   whatsapp: string;
-  @IsOptional()
-  @IsNotEmpty()
+  @IsString()
   @IsNumberString()
-  phone: string;
-  @IsOptional()
+  @Length(10, 11)
   @IsNotEmpty()
+  phone: string;
+  @IsString()
   @IsEmail()
+  @IsNotEmpty()
   email: string;
-  //teste
 }
