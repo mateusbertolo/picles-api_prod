@@ -1,37 +1,29 @@
-import { Body, Controller, Get, Inject, Put } from '@nestjs/common';
-import { IUseCase } from 'src/domain/interfaces/usecase/IUsecase.interface';
-import UpdateShelterDetailsControllerInput from './dtos/update.shelter.details.controller.input';
-import GetSheltherDetailsUseCaseOutput from 'src/shelter/usecases/dtos/get.shelter.details.usecase.output';
-import UpdateSheltherDetailsUseCaseInput from 'src/shelter/usecases/dtos/update.shelter.details.usecase.input';
-import UpdateSheltherDetailsUseCaseOutput from 'src/shelter/usecases/dtos/update.shelter.details.usecase.output';
-import ShelterTokens from './shelter.token';
+import { Body, Controller, Get, Inject, Patch, Put } from '@nestjs/common';
+import GetShelterDetailsUseCaseOutput from './usecases/dtos/get.shelter.details.usecase.output';
+import { IUseCase } from 'src/domain/iusecase.interface';
+import ShelterTokens from './shelter.tokens';
+import UpdateShelterControllerInput from './dtos/update.shelter.controller.input';
+import UpdateShelterDetailsUseCaseInput from './usecases/dtos/update.shelter.details.usecase.input';
+import UpdateShelterDetailsUseCaseOutput from './usecases/dtos/update.shelter.details.usecase.output';
 
 @Controller('shelter')
 export class ShelterController {
-  constructor(
-    @Inject(ShelterTokens.getShelterDetailsUseCase)
-    private readonly getShelterDetailsUseCase: IUseCase<
-      null,
-      GetSheltherDetailsUseCaseOutput
-    >,
 
-    @Inject(ShelterTokens.updateShelterDetailsUseCase)
-    private readonly updateShelterDetailsUsecase: IUseCase<
-      UpdateSheltherDetailsUseCaseInput,
-      UpdateSheltherDetailsUseCaseOutput
-    >,
-  ) {}
+  @Inject(ShelterTokens.getShelterDetailsUseCase)
+  private readonly getShelterDetailsUseCase: IUseCase<null,GetShelterDetailsUseCaseOutput>;
+
+  @Inject(ShelterTokens.updateShelterDetailsUseCase)
+  private readonly updateShelterDetailsUseCase: IUseCase<UpdateShelterDetailsUseCaseInput, UpdateShelterDetailsUseCaseOutput>;
 
   @Get()
-  async getShelterDetails(): Promise<GetSheltherDetailsUseCaseOutput> {
+  async getShelterDetails(): Promise<GetShelterDetailsUseCaseOutput> {
     return await this.getShelterDetailsUseCase.run(null);
   }
 
   @Put()
-  async updateShelterDetails(
-    @Body() input: UpdateShelterDetailsControllerInput,
-  ): Promise<UpdateSheltherDetailsUseCaseOutput> {
-    const useCaseInput = new UpdateSheltherDetailsUseCaseInput({ ...input });
-    return await this.updateShelterDetailsUsecase.run(useCaseInput);
+  async updateShelterDetails(@Body() input: UpdateShelterControllerInput): Promise<UpdateShelterDetailsUseCaseOutput> {
+    const useCaseInput = new UpdateShelterDetailsUseCaseInput({ ...input });
+    return await this.updateShelterDetailsUseCase.run(useCaseInput);
   }
+
 }

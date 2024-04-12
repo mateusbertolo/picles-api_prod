@@ -1,4 +1,4 @@
-export default class GetSheltherDetailsUseCaseOutput {
+export default class GetShelterDetailsUseCaseOutput {
   shelterName: string;
   shelterWhatsApp: string;
   shelterEmail: string;
@@ -6,7 +6,7 @@ export default class GetSheltherDetailsUseCaseOutput {
   createdAt: Date;
   updatedAt: Date;
 
-  constructor(data: Partial<GetSheltherDetailsUseCaseOutput>) {
+  constructor(data: Partial<GetShelterDetailsUseCaseOutput>) {
     Object.assign(this, data);
   }
 }

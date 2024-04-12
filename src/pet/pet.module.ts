@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { PetController } from './pet.controller';
-import { PetRepository } from './pet.repository';
+import PetTokens from './pet.tokens';
 import CreatePetUseCase from './usecases/create.pet.usecase';
-import PetTokens from './pet.token';
+import PetRepository from './pet.repository';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Pet, PetSchema } from './schemas/pet.schema';
-import FindPetByIdUseCase from './usecases/find.pet.by.id.usecase';
+import GetPetByIdUseCase from './usecases/get.pet.by.id.usecase';
 import UpdatePetByIdUseCase from './usecases/update.pet.by.id.usecase';
 import DeletePetByIdUseCase from './usecases/delete.pet.by.id.usecase';
-import FindPetUseCase from './usecases/find.pet.usecase';
 import UpdatePetPhotoByIdUseCase from './usecases/update.pet.photo.by.id.usecase';
+import AppTokens from 'src/app.tokens';
 import FileService from 'src/file.service';
 
 @Module({
@@ -18,36 +18,32 @@ import FileService from 'src/file.service';
   providers: [
     {
       provide: PetTokens.createPetUseCase,
-      useClass: CreatePetUseCase,
+      useClass: CreatePetUseCase
     },
     {
-      provide: PetTokens.findPetByIdUseCase,
-      useClass: FindPetByIdUseCase,
+      provide: PetTokens.getPetByIdUseCase,
+      useClass: GetPetByIdUseCase
     },
     {
       provide: PetTokens.updatePetByIdUseCase,
-      useClass: UpdatePetByIdUseCase,
+      useClass: UpdatePetByIdUseCase
     },
     {
       provide: PetTokens.deletePetByIdUseCase,
-      useClass: DeletePetByIdUseCase,
-    },
-    {
-      provide: PetTokens.findPetUseCase,
-      useClass: FindPetUseCase,
+      useClass: DeletePetByIdUseCase
     },
     {
       provide: PetTokens.updatePetPhotoByIdUseCase,
-      useClass: UpdatePetPhotoByIdUseCase,
+      useClass: UpdatePetPhotoByIdUseCase
     },
     {
       provide: PetTokens.petRepository,
-      useClass: PetRepository,
+      useClass: PetRepository
     },
     {
-      provide: PetTokens.fileService,
-      useClass: FileService,
-    },
-  ],
+      provide: AppTokens.fileService,
+      useClass: FileService
+    }
+  ]
 })
 export class PetModule {}

@@ -1,56 +1,61 @@
-import { IUseCase } from 'src/domain/interfaces/usecase/IUsecase.interface';
-import CreatePetUseCaseOutput from './dtos/create.pet.usecase.output';
-import { Inject, Injectable } from '@nestjs/common';
-import UpdatePetByIdUseCaseInput from './dtos/update.pet.by.id.usecase.input';
-import UpdatePetByIdUseCaseOutput from './dtos/update.pet.usecase.output';
-import PetNotFoundError from 'src/domain/errors/pet.not.found.error';
-import { Pet } from '../schemas/pet.schema';
-import PetTokens from '../pet.token';
-import IPetRepository from '../interfaces/pet.repository.interface';
+import { IUseCase } from "src/domain/iusecase.interface";
+import UpdatePetByIdUseCaseInput from "./dtos/update.pet.by.id.usecase.input";
+import UpdatePetByIdUseCaseOutput from "./dtos/update.pet.by.id.usecase.output";
+import { Inject, Injectable } from "@nestjs/common";
+import IPetRepository from "../interfaces/pet.repository.interface";
+import PetTokens from "../pet.tokens";
+import { Pet } from "../schemas/pet.schema";
+import PetNotFoundError from "src/domain/errors/pet.not.found.error";
+import AppTokens from "src/app.tokens";
+import IFileService from "src/interfaces/file.service.interface";
 
 @Injectable()
-export default class UpdatePetByIdUseCase
-  implements IUseCase<UpdatePetByIdUseCaseInput, UpdatePetByIdUseCaseOutput>
-{
-  constructor(
-    @Inject(PetTokens.petRepository)
-    private readonly petRepository: IPetRepository,
-  ) {}
+export default class UpdatePetByIdUseCase implements IUseCase<UpdatePetByIdUseCaseInput, UpdatePetByIdUseCaseOutput> {
 
-  async run(
-    input: UpdatePetByIdUseCaseInput,
-  ): Promise<UpdatePetByIdUseCaseOutput> {
-    let pet = await this.findPetById(input.id);
+    constructor(
+        @Inject(PetTokens.petRepository)
+        private readonly petRepository: IPetRepository,
 
-    if (pet == null) {
-      throw new PetNotFoundError();
+        @Inject(AppTokens.fileService)
+        private readonly fileService: IFileService
+    ) { }
+
+    async run(input: UpdatePetByIdUseCaseInput): Promise<UpdatePetByIdUseCaseOutput> {
+        
+        let pet = await this.getPetById(input.id)
+
+        if(!pet) {
+            throw new PetNotFoundError()
+        }
+
+        await this.petRepository.updateById({
+            ...input,
+            _id: input.id
+        });
+
+        pet = await this.getPetById(input.id);
+
+        const petPhoto = !!pet.photo ? (await this.fileService.readFile(pet.photo)).toString('base64') : null;
+
+        return new UpdatePetByIdUseCaseOutput({
+            id: pet._id,
+            name: pet.name,
+            type: pet.type,
+            size: pet.size,
+            gender: pet.gender,
+            bio: pet.bio,
+            photo: petPhoto,
+            createdAt: pet.createdAt,
+            updatedAt: pet.updatedAt,
+        });
     }
 
-    await this.petRepository.update({
-      ...input,
-      _id: input.id,
-    });
-
-    pet = await this.findPetById(input.id);
-
-    return new CreatePetUseCaseOutput({
-      id: pet._id,
-      name: pet.name,
-      type: pet.type,
-      size: pet.size,
-      gender: pet.gender,
-      bio: pet.bio,
-      photo: pet.photo,
-      createdAt: pet.createdAt,
-      updatedAt: pet.updateAt,
-    });
-  }
-
-  private async findPetById(id: string): Promise<Pet> {
-    try {
-      return await this.petRepository.getById(id);
-    } catch {
-      return null;
+    private async getPetById(id: string): Promise<Pet> {
+        try {
+            return await this.petRepository.getById(id)
+        } catch (error) {
+            return null
+        }
     }
-  }
+    
 }

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Shelter } from './schemas/shelter.schema';
 import { Model } from 'mongoose';
 import IShelterRepository from './interfaces/shelter.repository.interface';
+import { Shelter } from './schemas/shelter.schema';
 
 @Injectable()
-export class ShelterRepository implements IShelterRepository {
+export default class ShelterRepository implements IShelterRepository {
   constructor(
     @InjectModel(Shelter.name)
     private shelterModel: Model<Shelter>,
@@ -15,10 +15,12 @@ export class ShelterRepository implements IShelterRepository {
     return await this.shelterModel.findOne();
   }
 
-  async update(data: Partial<Shelter>) {
-    return this.shelterModel.updateOne(null, {
+  async update(data: Partial<Shelter>): Promise<void> {
+    await this.shelterModel.updateOne(null, {
       ...data,
-      updateAt: new Date(),
-    });
+      updatedAt: new Date()
+    })
   }
+
+  
 }
