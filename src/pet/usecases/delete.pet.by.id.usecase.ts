@@ -6,13 +6,15 @@ import PetNotFoundError from "src/domain/errors/pet.not.found.error";
 import IPetRepository from "../interfaces/pet.repository.interface";
 import PetTokens from "../pet.tokens";
 import { Pet } from "../schemas/pet.schema";
+import IFileService from "src/interfaces/file.service.interface";
+import AppTokens from "src/app.tokens";
 
 @Injectable()
 export default class DeletePetByIdUseCase implements IUseCase<DeletePetByIdUseCaseInput, DeletePetByIdUseCaseOutput> {
     
     constructor(
         @Inject(PetTokens.petRepository)
-        private readonly petRepository: IPetRepository
+        private readonly petRepository: IPetRepository,
     ) { }
 
     async run(input: DeletePetByIdUseCaseInput): Promise<DeletePetByIdUseCaseOutput> {

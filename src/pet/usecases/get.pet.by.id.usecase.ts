@@ -6,6 +6,8 @@ import PetTokens from "../pet.tokens";
 import IPetRepository from "../interfaces/pet.repository.interface";
 import { Pet } from "../schemas/pet.schema";
 import PetNotFoundError from "src/domain/errors/pet.not.found.error";
+import IFileService from "src/interfaces/file.service.interface";
+import AppTokens from "src/app.tokens";
 
 @Injectable()
 export default class GetPetByIdUseCase implements IUseCase<GetPetByIdUseCaseInput, GetPetByIdUseCaseOutput> {
@@ -13,7 +15,10 @@ export default class GetPetByIdUseCase implements IUseCase<GetPetByIdUseCaseInpu
     
     constructor(
         @Inject(PetTokens.petRepository)
-        private readonly petRepository: IPetRepository
+        private readonly petRepository: IPetRepository,
+
+        @Inject(AppTokens.fileService)
+        private readonly fileService: IFileService
     ) { }
     
     async run(input: GetPetByIdUseCaseInput): Promise<GetPetByIdUseCaseOutput> {
