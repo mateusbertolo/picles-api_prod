@@ -5,7 +5,6 @@ export default class UpdateShelterDetailsUseCaseInput {
   phone: string;
 
   constructor(data: Partial<UpdateShelterDetailsUseCaseInput>) {
-      Object.assign(this, data);
+    Object.assign(this, data);
   }
-
 }

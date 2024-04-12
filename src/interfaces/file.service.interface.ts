@@ -1,4 +1,3 @@
-export default interface IFileService {
-    readFile(path: string): Promise<Buffer>;
-  }
-  
+export default interface IFileService{
+  readFile(path: string): Promise<Buffer>;
+}

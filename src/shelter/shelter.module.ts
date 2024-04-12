@@ -2,11 +2,10 @@ import { Module } from '@nestjs/common';
 import { ShelterController } from './shelter.controller';
 import ShelterTokens from './shelter.tokens';
 import GetShelterDetailsUseCase from './usecases/get.shelter.details.usecase';
-import { MongooseModule } from '@nestjs/mongoose/dist/mongoose.module';
+import { MongooseModule } from '@nestjs/mongoose';
 import { Shelter, ShelterSchema } from './schemas/shelter.schema';
-import UpdateSheltherDetailsUseCase from './usecases/update.shelter.details.usecase';
+import { ShelterRository } from './shelter.repository';
 import UpdateShelterDetailsUseCase from './usecases/update.shelter.details.usecase';
-import ShelterRepository from './shelter.repository';
 
 @Module({
   controllers: [ShelterController],
@@ -20,12 +19,12 @@ import ShelterRepository from './shelter.repository';
     },
     {
       provide: ShelterTokens.shelterRepository,
-      useClass: ShelterRepository,
+      useClass: ShelterRository,
     },
     {
       provide: ShelterTokens.updateShelterDetailsUseCase,
-      useClass: UpdateShelterDetailsUseCase
-    }
+      useClass: UpdateShelterDetailsUseCase,
+    },
   ],
 })
 export class ShelterModule {}
