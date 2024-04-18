@@ -42,7 +42,7 @@ export default class UpdatePetPhotoByIdUseCase
       size: pet.size,
       gender: pet.gender,
       bio: pet.bio,
-      photo: photo.toString('base64'),
+      photo: photo.toString(),
       createdAt: pet.createdAt,
       updatedAt: pet.updatedAt,
     });
@@ -56,3 +56,4 @@ export default class UpdatePetPhotoByIdUseCase
     }
   }
 }
+

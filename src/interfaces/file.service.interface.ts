@@ -1,4 +1,5 @@
 export default interface IFileService {
-    readFile(path: string): Promise<Buffer>;
+  readFile(photoPath: string): unknown;
+  readFileInBase64(path: string): Promise<string>;
   }
   
