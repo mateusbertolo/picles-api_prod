@@ -4,9 +4,6 @@ import IFileService from './interfaces/file.service.interface';
 
 @Injectable()
 export default class FileService implements IFileService {
-  readFile(photoPath: string): unknown {
-    throw new Error('Method not implemented.');
-  }
   async readFileInBase64(path: string): Promise<string> {
 
     if(!this.fileExists(path)) {
